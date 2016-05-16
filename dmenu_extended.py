@@ -484,9 +484,15 @@ class dmenu(object):
         with codecs.open(path, 'w',encoding=system_encoding) as f:
             if type(items) == list:
                 for item in items:
-                    f.write(item+"\n")
+                    try:
+                        f.write(item+"\n")
+                    except UnicodeEncodeError:
+                        print('Skipped a file because of error...')
             else:
-                f.write(items)
+                try:
+                    f.write(items)
+                except UnicodeEncodeError:
+                    print('Skipped a file because of error...')
         return 1
 
 
